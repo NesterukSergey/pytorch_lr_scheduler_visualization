@@ -4,7 +4,7 @@ from pytorch_lr_scheduler_visualizer.lr_scheduler.Scheduler import Scheduler
 
 class SchedulerBuilder:
     def __init__(self):
-        self.max_iter = 10000
+        self.max_iter = 500
         self.default_lr = 1e-3
 
         self.schedulers_params = self.get_schedulers_params()
@@ -17,95 +17,24 @@ class SchedulerBuilder:
                     'param': 'T_max',
                     'type': 'int',
                     'min': 1,
-                    'default': self.max_iter
+                    'max': 150,
+                    'default': 10
                 },
                 {
                     'param': 'eta_min ',
                     'type': 'float',
-                    'min': 0.0,
-                    'max': 1.0,
+                    'min': -0.05,
+                    'max': 0.05,
                     'default': 0.0
                 },
-                {
-                    'param': 'last_epoch',
-                    'type': 'int',
-                    'min': -1,
-                    'max': self.max_iter,
-                    'default': -1
-                },
             ],
-            #             'CyclicLR': [
-            #                 {
-            #                     'param': 'base_lr',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': self.default_lr
-            #                 },
-            #                 {
-            #                     'param': 'max_lr',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 1.0
-            #                 },
-            #                 {
-            #                     'param': 'step_size_up',
-            #                     'type': 'int',
-            #                     'min': 1,
-            #                     'max': self.max_iter,
-            #                     'default': 2000
-            #                 },
-            #                 {
-            #                     'param': 'step_size_down',
-            #                     'type': 'int',
-            #                     'min': 1,
-            #                     'max': self.max_iter,
-            #                     'default': 2000
-            #                 },
-            #                 {
-            #                     'param': 'mode',
-            #                     'type': 'str',
-            #                     'optioms': ['triangular', 'triangular2', 'exp_range'],
-            #                     'default': 'triangular'
-            #                 },
-            #                 {
-            #                     'param': 'gamma',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 1.0
-            #                 },
-            #                 {
-            #                     'param': 'base_momentum',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 0.8
-            #                 },
-            #                 {
-            #                     'param': 'max_momentum',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 0.9
-            #                 },
-            #                 {
-            #                     'param': 'last_epoch',
-            #                     'type': 'int',
-            #                     'min': -1,
-            #                     'max': self.max_iter,
-            #                     'default': -1
-            #                 },
-
-            #             ],
             'ReduceLROnPlateau': [
                 {
                     'param': 'factor',
                     'type': 'float',
                     'min': 0.0,
                     'max': 1.0,
-                    'default': 0.1
+                    'default': 0.2
                 },
                 {
                     'param': 'patience',
@@ -118,15 +47,8 @@ class SchedulerBuilder:
                     'param': 'min_lr',
                     'type': 'float',
                     'min': 0.0,
-                    'max': 1.0,
+                    'max': 0.1,
                     'default': 0.0
-                },
-                {
-                    'param': 'eps',
-                    'type': 'float',
-                    'min': 0.0,
-                    'max': 1.0,
-                    'default': 1e-8
                 },
             ],
             'ExponentialLR': [
@@ -137,99 +59,13 @@ class SchedulerBuilder:
                     'max': 1.0,
                     'default': 0.9
                 },
-                {
-                    'param': 'last_epoch',
-                    'type': 'int',
-                    'min': -1,
-                    'max': self.max_iter,
-                    'default': -1
-                },
             ],
-            'MultiStepLR': [
-                {
-                    'param': 'milestones',
-                    'type': 'list',
-                    'default': [30, 80]
-                },
-                {
-                    'param': 'gamma',
-                    'type': 'float',
-                    'min': 0.0,
-                    'max': 1.0,
-                    'default': 0.1
-                },
-                {
-                    'param': 'last_epoch',
-                    'type': 'int',
-                    'min': -1,
-                    'max': self.max_iter,
-                    'default': -1
-                },
-            ],
-            #             'OneCycleLR': [
-            #                 {
-            #                     'param': 'max_lr',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 1.0
-            #                 },
-            #                 {
-            #                     'param': 'total_steps',
-            #                     'type': 'int',
-            #                     'min': 0,
-            #                     'max': self.max_iter,
-            #                     'default': 1000
-            #                 },
-            #                 {
-            #                     'param': 'pct_start',
-            #                     'type': 'float',
-            #                     'min':0.1,
-            #                     'max': 0.9,
-            #                     'default': 0.3
-            #                 },
-            # #                 {
-            # #                     'param': 'anneal_strategy',
-            # #                     'type': 'str',
-            # #                     'optioms': ['cos', 'linear'],
-            # #                     'default': 'cos'
-            # #                 },
-            #                 {
-            #                     'param': 'base_momentum',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 0.85
-            #                 },
-            #                 {
-            #                     'param': 'max_momentum',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 0.95
-            #                 },
-            #                 {
-            #                     'param': 'div_factor',
-            #                     'type': 'float',
-            #                     'min':0.0,
-            #                     'max': 1.0,
-            #                     'default': 1e-4
-            #                 },
-            #                 {
-            #                     'param': 'last_epoch',
-            #                     'type': 'int',
-            #                     'min': -1,
-            #                     'max': self.max_iter,
-            #                     'default': -1
-            #                 },
-
-            #             ],
             'StepLR': [
                 {
                     'param': 'step_size',
                     'type': 'int',
                     'min': 1,
-                    'max': self.max_iter,
+                    'max': 100,
                     'default': 5
                 },
                 {
@@ -238,13 +74,6 @@ class SchedulerBuilder:
                     'min': 0.0,
                     'max': 1.0,
                     'default': 0.1
-                },
-                {
-                    'param': 'last_epoch',
-                    'type': 'int',
-                    'min': -1,
-                    'max': self.max_iter,
-                    'default': -1
                 },
             ],
         }
@@ -269,7 +98,7 @@ class SchedulerBuilder:
 
     def get_scheduler(self, name, params):
         self.check_scheduler_name(name)
-        model = torch.nn.Linear(1, 1)  # dummmy model
+        model = torch.nn.Linear(1, 1)  # dummy model
         optimizer = torch.optim.Adam(model.parameters())  # dummy optimizer
 
         params = self.parse_params(params)

@@ -13,7 +13,7 @@ def get_all_default(iterations=100):
             default_params[param['param']] = param['default']
 
         scheduler = sched_build.get_scheduler(scheduler_name, default_params)
-        scheduler.iterate(100)
+        scheduler.iterate(iterations)
 
         default_results[scheduler_name] = scheduler.lr_history
 
